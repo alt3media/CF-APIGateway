@@ -1,0 +1,41 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Lambda function 
+
+Resources:
+
+  ReadCFRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: ReadCFBucketRole
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 's3:GetObject'
+                Resource: 'arn:aws:s3:::cf.sunitech.net/*'
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.9
+      Role: !GetAtt ReadCFRole.Arn
+      Handler: index.handler
+      Code:
+        S3Bucket: lambda.sunitech.net
+        S3Key: api_function.zip
+      Description: Invoke a function during stack creation.
+      TracingConfig:
+        Mode: Active
