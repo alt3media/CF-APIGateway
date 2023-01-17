@@ -155,13 +155,13 @@ Resources:
         IntegrationResponses:
           StatusCode: 200
         RequestTemplates:
-        - "application/json": !Join
+          application/json: !Join
             - ''
             - - "{"
               - "\"name\": \"$input.params('name')\""
               - "}"
-      #RequestParameters: 
-      #  method.request.querystring.name: "'false'"
+      RequestParameters: 
+        method.request.querystring.name: "'false'"
       ResourceId: !Ref ApiResource
       RestApiId: !Ref RestApi
       MethodResponses:
