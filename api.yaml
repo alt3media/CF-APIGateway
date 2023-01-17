@@ -5,6 +5,11 @@ Description: Lambda function
 
 Parameters:
 
+  AccountId:
+    Type: String
+    Default: '106465311501'
+    Description: AWS Account ID
+    
   Msg:
     Type: String
     Default: 'Hello from APIGateway and Lambda!'
@@ -65,7 +70,7 @@ Resources:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       SourceAccount: !Ref 'AWS::AccountId'
-      SourceArn: !GetAtt RestApi.Arn
+      SourceArn: !Sub 'arn:aws:execute-api:ap-southeast-2:${AccountId}:RestApi/*'
       
   RestApiStage:
     Type: AWS::ApiGateway::Stage
