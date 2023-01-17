@@ -30,10 +30,7 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              Service: [
-                "lambda.amazonaws.com",
-                "apigateway.amazonaws.com"
-              ]  
+              Service: lambda.amazonaws.com
             Action: sts:AssumeRole
       Path: /
       ManagedPolicyArns:
