@@ -33,7 +33,7 @@ Resources:
       Role: !GetAtt LambdaRole.Arn
       Handler: index.handler
       Code:
-        ZipFile: | !Sub
+        ZipFile: !Sub |
           import json
 
           def lambda_handler(event, context):
@@ -41,7 +41,7 @@ Resources:
               return {
                   "statusCode": 200,
                   "isBase64Encoded": False,
-                  "body": json.dumps('${Msg}'),
+                  "body": json.dumps('${Msg}')
               }
       Description: Invoke a function during stack creation.
       TracingConfig:
