@@ -113,7 +113,7 @@ Resources:
                   - logs:PutLogEvents
                   - logs:GetLogEvents
                   - logs:FilterLogEvents
-            Resource: "*"
+                Resource: "*"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
         
