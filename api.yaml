@@ -100,11 +100,11 @@ Resources:
             Action: sts:AssumeRole
       Path: /
       Policies:
-        - PolicyName: "ApiGatewayLogsPolicy",
+        - PolicyName: "ApiGatewayLogsPolicy"
           PolicyDocument:
             Version": "2012-10-17"
             Statement":
-              - Effect: Allow,
+              - Effect: Allow
                 Action:
                   - logs:CreateLogGroup
                   - logs:CreateLogStream
@@ -140,7 +140,7 @@ Resources:
     DependsOn: LambdaPermission
     Type": "AWS::ApiGateway::Method"
     Properties:
-      AuthorizationType: "NONE",
+      AuthorizationType: "NONE"
       HttpMethod": "GET"
       Integration:
         Type: "AWS"
