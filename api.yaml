@@ -79,7 +79,7 @@ Resources:
       StageName: default
       Description: Default Stage
       RestApiId: !Ref RestApi
-      DeploymentId: !Ref DeploymentId
+      DeploymentId: !Ref ApiDeployment
       Variables:
         Stack: Prod
       MethodSettings:
