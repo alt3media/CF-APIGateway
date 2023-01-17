@@ -73,6 +73,7 @@ Resources:
           - !Ref AWS::AccountId
           - ':'
           - !Ref RestApi
+          - '/*'
       
   RestApiStage:
     Type: AWS::ApiGateway::Stage
