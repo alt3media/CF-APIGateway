@@ -153,7 +153,7 @@ Resources:
             - !GetAtt LambdaFunction.Arn
             - '/invocations'
         IntegrationResponses:
-          StatusCode: 200
+          - StatusCode: 200
         RequestTemplates:
           application/json: !Join
             - ''
