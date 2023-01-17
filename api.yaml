@@ -70,7 +70,7 @@ Resources:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       SourceAccount: !Ref 'AWS::AccountId'
-      SourceArn: !Sub 'arn:aws:execute-api:ap-southeast-2:${AccountId}:RestApi/*'
+      SourceArn: !Sub 'arn:aws:execute-api:ap-southeast-2:${AccountId}:${ApiName}/*'
       
   RestApiStage:
     Type: AWS::ApiGateway::Stage
@@ -87,4 +87,3 @@ Resources:
           HttpMethod: *
           MetricsEnabled: 'false'
           DataTraceEnabled: 'false'
-
