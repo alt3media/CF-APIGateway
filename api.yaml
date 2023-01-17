@@ -83,7 +83,7 @@ Resources:
       Variables:
         Stack: Prod
       MethodSettings:
-        - ResourcePath: /*
-          HttpMethod: *
+        - ResourcePath: "/*"
+          HttpMethod: "*"
           MetricsEnabled: 'false'
           DataTraceEnabled: 'false'
