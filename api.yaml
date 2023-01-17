@@ -9,6 +9,11 @@ Parameters:
     Type: String
     Default: 'Hello from APIGateway and Lambda!'
     Description: Message
+    
+  ApiName:
+    Type: String
+    Default: 'TestAPI'
+    Description: API name
 
 Resources:
 
@@ -46,3 +51,20 @@ Resources:
       Description: Invoke a function during stack creation.
       TracingConfig:
         Mode: Active
+
+  RestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties: 
+      Name: !Ref ${ApiName}
+      Description: API Name
+      
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !GetAtt LambdaFunction.Arn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceAccount: !Ref 'AWS::AccountId'
+      SourceArn: !GetAtt RestApi.Arn
+      
+      
