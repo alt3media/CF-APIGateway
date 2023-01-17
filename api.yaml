@@ -55,7 +55,7 @@ Resources:
   RestApi:
     Type: AWS::ApiGateway::RestApi
     Properties: 
-      Name: !Ref ${ApiName}
+      Name: !Ref ApiName
       Description: API Name
       
   LambdaPermission:
