@@ -124,7 +124,7 @@ Resources:
 
   ApiDeployment:
     Type: "AWS::ApiGateway::Deployment"
-    DependsOn: GreetingRequest
+    DependsOn: ApiRequest
     Properties:
       RestApiId: !Ref RestApi"
       StageName: "DummyStage"
@@ -141,7 +141,7 @@ Resources:
     Type: "AWS::ApiGateway::Method"
     Properties:
       AuthorizationType: "NONE"
-      HttpMethod": "GET"
+      HttpMethod: "GET"
       Integration:
         Type: "AWS"
         IntegrationHttpMethod: "POST"
@@ -162,7 +162,7 @@ Resources:
               - "}"
       RequestParameters:
       - "method.request.querystring.name": false
-      ResourceId": !Ref ApiResource
-      RestApiId": !Ref RestApi
+      ResourceId: !Ref ApiResource
+      RestApiId: !Ref RestApi
       MethodResponses:
         - StatusCode: 200
