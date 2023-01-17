@@ -3,6 +3,13 @@ AWSTemplateFormatVersion: '2010-09-09'
 
 Description: Lambda function 
 
+Parameters:
+
+  Msg:
+    Type: String
+    Msg: 'Hello from APIGateway and Lambda!'
+    Description: Message
+
 Resources:
 
   LambdaRole:
@@ -26,8 +33,7 @@ Resources:
       Role: !GetAtt LambdaRole.Arn
       Handler: index.handler
       Code:
-        ZipFile: 
-        - |
+        ZipFile: | !Sub
           import json
 
           def lambda_handler(event, context):
@@ -37,7 +43,6 @@ Resources:
                   "isBase64Encoded": False,
                   "body": json.dumps('${Msg}'),
               }
-        - Msg: 'Hello from APIGateway and Lambda'
       Description: Invoke a function during stack creation.
       TracingConfig:
         Mode: Active
