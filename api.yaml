@@ -7,7 +7,7 @@ Parameters:
 
   Msg:
     Type: String
-    Msg: 'Hello from APIGateway and Lambda!'
+    Default: 'Hello from APIGateway and Lambda!'
     Description: Message
 
 Resources:
