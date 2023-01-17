@@ -87,3 +87,82 @@ Resources:
           HttpMethod: "*"
           MetricsEnabled: 'false'
           DataTraceEnabled: 'false'
+
+  ApiGatewayCloudWatchLogsRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: apigateway.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: "ApiGatewayLogsPolicy",
+          PolicyDocument:
+            Version": "2012-10-17"
+            Statement":
+              - Effect: Allow,
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:DescribeLogGroups
+                  - logs:DescribeLogStreams
+                  - logs:PutLogEvents
+                  - logs:GetLogEvents
+                  - logs:FilterLogEvents
+            Resource: "*"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        
+  ApiGatewayAccount:
+    Type: "AWS::ApiGateway::Account"
+    Properties:
+      CloudWatchRoleArn: !GetAtt ApiGatewayCloudWatchLogsRole.Arn
+
+  ApiDeployment:
+    Type: "AWS::ApiGateway::Deployment"
+    DependsOn": GreetingRequest
+    Properties:
+      RestApiId: !Ref RestApi"
+      StageName: "DummyStage"
+
+  ApiResource:
+    Type: "AWS::ApiGateway::Resource"
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !GetAtt RestApi.RootResourceId
+      PathPart: "test"
+
+  ApiRequest:
+    DependsOn: LambdaPermission
+    Type": "AWS::ApiGateway::Method"
+    Properties:
+      AuthorizationType: "NONE",
+      HttpMethod": "GET"
+      Integration:
+        Type: "AWS"
+        IntegrationHttpMethod: "POST"
+        Uri: !Join
+          - ''
+          - - 'arn:aws:apigateway:'
+            - !Ref AWS::Region
+            - ':lambda:path/2015-03-31/functions/'
+            - !GetAtt LambdaFunction.Arn
+            - '/invocations'
+        IntegrationResponses:
+          StatusCode: 200
+        RequestTemplates:
+        - "application/json": !Join
+            - ''
+            - - "{"
+              - "\"name\": \"$input.params('name')\""
+              - "}"
+      RequestParameters:
+      - "method.request.querystring.name": false
+      ResourceId": !Ref ApiResource
+      RestApiId": !Ref RestApi
+      MethodResponses:
+        - StatusCode: 200
