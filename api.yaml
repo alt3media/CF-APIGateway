@@ -160,9 +160,7 @@ Resources:
             - - "{"
               - "\"name\": \"$input.params('name')\""
               - "}"
-      RequestParameters: {
-        "method.request.querystring.name": false
-      }  
+      RequestParameters: { "method.request.querystring.name": false }  
       ResourceId: !Ref ApiResource
       RestApiId: !Ref RestApi
       MethodResponses:
