@@ -67,4 +67,19 @@ Resources:
       SourceAccount: !Ref 'AWS::AccountId'
       SourceArn: !GetAtt RestApi.Arn
       
-      
+  RestApiStage:
+    Type: AWS::ApiGateway::Stage
+    DependsOn: ApiGatewayAccount
+    Properties:
+      StageName: default
+      Description: Default Stage
+      RestApiId: !Ref RestApi
+      DeploymentId: !Ref DeploymentId
+      Variables:
+        Stack: Prod
+      MethodSettings:
+        - ResourcePath: /*
+          HttpMethod: *
+          MetricsEnabled: 'false'
+          DataTraceEnabled: 'false'
+
