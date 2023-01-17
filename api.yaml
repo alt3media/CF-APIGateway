@@ -138,7 +138,7 @@ Resources:
 
   ApiRequest:
     DependsOn: LambdaPermission
-    Type": "AWS::ApiGateway::Method"
+    Type: "AWS::ApiGateway::Method"
     Properties:
       AuthorizationType: "NONE"
       HttpMethod": "GET"
